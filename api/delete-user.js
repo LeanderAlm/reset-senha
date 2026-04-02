@@ -10,13 +10,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1. Validar usuário
+    // 1. Validar usuário via Supabase
     const userRes = await fetch(
-      'https://vppzpfoqmhjsynusyitx.supabase.co/auth/v1/user',
+      `${process.env.SUPABASE_URL}/auth/v1/user`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          apikey: 'SUA_ANON_KEY',
+          apikey: process.env.SUPABASE_ANON_KEY,
         },
       }
     );
@@ -29,14 +29,14 @@ export default async function handler(req, res) {
 
     const userId = userData.id;
 
-    // 2. Deletar usuário com service_role
+    // 2. Deletar usuário com service_role (seguro)
     const deleteRes = await fetch(
-      `https://vppzpfoqmhjsynusyitx.supabase.co/auth/v1/admin/users/${userId}`,
+      `${process.env.SUPABASE_URL}/auth/v1/admin/users/${userId}`,
       {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer SUA_SERVICE_ROLE_KEY`,
-          apikey: 'SUA_SERVICE_ROLE_KEY',
+          Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+          apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
         },
       }
     );
