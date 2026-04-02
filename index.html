@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redefinir senha</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="font-family: Arial; text-align: center; padding: 40px;">
+
+  <h2>Redefinir senha</h2>
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Nova senha"
+    style="padding: 10px; width: 80%; margin-bottom: 10px;"
+  />
+
+  <br />
+
+  <button
+    onclick="updatePassword()"
+    style="padding: 10px 20px;"
+  >
+    Atualizar senha
+  </button>
+
+  <p id="msg"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <script>
+    const supabaseClient = supabase.createClient(
+      'https://vppzpfoqmhjsynusyitx.supabase.co',
+      'sb_publishable_T7AEj7zSK62iKDYQTWeIeQ_NM8hbY15'
+    );
+
+    async function updatePassword() {
+      const password = document.getElementById('password').value;
+
+      if (!password || password.length < 6) {
+        document.getElementById('msg').innerText = 'A senha deve ter pelo menos 6 caracteres';
+        return;
+      }
+
+      const { error } = await supabaseClient.auth.updateUser({
+        password: password
+      });
+
+      if (error) {
+        document.getElementById('msg').innerText = error.message;
+      } else {
+        document.getElementById('msg').innerText = 'Senha atualizada com sucesso!';
+      }
+    }
+  </script>
+
+</body>
+</html>
