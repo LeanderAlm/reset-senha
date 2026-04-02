@@ -3,53 +3,154 @@
 <head>
   <title>Redefinir senha</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0B5E2B;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #0B5E2B;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #0B5E2B;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #999;
+    }
+
+    .msg {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align: center; padding: 40px;">
 
-  <h2>Redefinir senha</h2>
+<body>
 
-  <input
-    type="password"
-    id="password"
-    placeholder="Nova senha"
-    style="padding: 10px; width: 80%; margin-bottom: 10px;"
-  />
+  <div class="container">
+    <h2>Redefinir senha</h2>
+    <p>Digite sua nova senha abaixo</p>
 
-  <br />
+    <input
+      type="password"
+      id="password"
+      placeholder="Nova senha"
+    />
 
-  <button
-    onclick="updatePassword()"
-    style="padding: 10px 20px;"
-  >
-    Atualizar senha
-  </button>
+    <input
+      type="password"
+      id="confirm"
+      placeholder="Confirmar senha"
+    />
 
-  <p id="msg"></p>
+    <button onclick="updatePassword()" id="btn">
+      Atualizar senha
+    </button>
+
+    <p id="msg" class="msg"></p>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
-    const supabaseClient = supabase.createClient(
+    const supabase = supabase.createClient(
       'https://vppzpfoqmhjsynusyitx.supabase.co',
       'sb_publishable_T7AEj7zSK62iKDYQTWeIeQ_NM8hbY15'
     );
 
     async function updatePassword() {
       const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+      const msg = document.getElementById('msg');
+      const btn = document.getElementById('btn');
 
-      if (!password || password.length < 6) {
-        document.getElementById('msg').innerText = 'A senha deve ter pelo menos 6 caracteres';
+      msg.innerText = '';
+
+      if (!password || !confirm) {
+        msg.innerText = 'Preencha todos os campos';
+        msg.className = 'msg error';
         return;
       }
 
-      const { error } = await supabaseClient.auth.updateUser({
+      if (password.length < 6) {
+        msg.innerText = 'A senha deve ter pelo menos 6 caracteres';
+        msg.className = 'msg error';
+        return;
+      }
+
+      if (password !== confirm) {
+        msg.innerText = 'As senhas não coincidem';
+        msg.className = 'msg error';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = 'Atualizando...';
+
+      const { error } = await supabase.auth.updateUser({
         password: password
       });
 
       if (error) {
-        document.getElementById('msg').innerText = error.message;
+        msg.innerText = error.message;
+        msg.className = 'msg error';
+        btn.disabled = false;
+        btn.innerText = 'Atualizar senha';
       } else {
-        document.getElementById('msg').innerText = 'Senha atualizada com sucesso!';
+        msg.innerText = 'Senha atualizada com sucesso!';
+        msg.className = 'msg success';
+        btn.innerText = 'Concluído';
       }
     }
   </script>
