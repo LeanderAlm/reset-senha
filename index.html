@@ -26,8 +26,8 @@
     }
 
     h2 {
-      margin-bottom: 10px;
       color: #0B5E2B;
+      margin-bottom: 10px;
     }
 
     p {
@@ -80,21 +80,12 @@
 
   <div class="container">
     <h2>Redefinir senha</h2>
-    <p>Digite sua nova senha abaixo</p>
+    <p id="subtitle">Carregando...</p>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Nova senha"
-    />
+    <input type="password" id="password" placeholder="Nova senha" disabled />
+    <input type="password" id="confirm" placeholder="Confirmar senha" disabled />
 
-    <input
-      type="password"
-      id="confirm"
-      placeholder="Confirmar senha"
-    />
-
-    <button onclick="updatePassword()" id="btn">
+    <button onclick="updatePassword()" id="btn" disabled>
       Atualizar senha
     </button>
 
@@ -104,16 +95,35 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
-    const supabase = supabase.createClient(
+    const supabaseClient = supabase.createClient(
       'https://vppzpfoqmhjsynusyitx.supabase.co',
       'sb_publishable_T7AEj7zSK62iKDYQTWeIeQ_NM8hbY15'
     );
 
+    const msg = document.getElementById('msg');
+    const btn = document.getElementById('btn');
+    const subtitle = document.getElementById('subtitle');
+
+    async function checkSession() {
+      const { data } = await supabaseClient.auth.getSession();
+
+      if (!data.session) {
+        subtitle.innerText = 'Link inválido ou expirado.';
+        msg.innerText = 'Solicite uma nova recuperação de senha.';
+        msg.className = 'msg error';
+        return;
+      }
+
+      subtitle.innerText = 'Digite sua nova senha';
+
+      document.getElementById('password').disabled = false;
+      document.getElementById('confirm').disabled = false;
+      btn.disabled = false;
+    }
+
     async function updatePassword() {
       const password = document.getElementById('password').value;
       const confirm = document.getElementById('confirm').value;
-      const msg = document.getElementById('msg');
-      const btn = document.getElementById('btn');
 
       msg.innerText = '';
 
@@ -138,7 +148,7 @@
       btn.disabled = true;
       btn.innerText = 'Atualizando...';
 
-      const { error } = await supabase.auth.updateUser({
+      const { error } = await supabaseClient.auth.updateUser({
         password: password
       });
 
@@ -153,6 +163,8 @@
         btn.innerText = 'Concluído';
       }
     }
+
+    checkSession();
   </script>
 
 </body>
