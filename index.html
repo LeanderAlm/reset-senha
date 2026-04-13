@@ -27,6 +27,7 @@
 
     h2 {
       color: #0B5E2B;
+      margin-bottom: 10px;
     }
 
     .hidden {
@@ -105,17 +106,24 @@
     /* ================= CHECK SESSION ================= */
 
     async function checkSession() {
-      const { data } = await supabaseClient.auth.getSession();
+      try {
+        const { data } = await supabaseClient.auth.getSession();
 
-      if (!data.session) {
-        status.innerText = 'Link inválido ou expirado.';
-        msg.innerText = 'Solicite uma nova recuperação.';
+        if (!data.session) {
+          status.innerText = 'Link inválido ou expirado.';
+          msg.innerText = 'Solicite uma nova recuperação de senha.';
+          msg.className = 'msg error';
+          return;
+        }
+
+        status.innerText = 'Digite sua nova senha';
+        form.classList.remove('hidden');
+
+      } catch {
+        status.innerText = 'Erro ao validar sessão.';
+        msg.innerText = 'Tente novamente mais tarde.';
         msg.className = 'msg error';
-        return;
       }
-
-      status.innerText = 'Digite sua nova senha';
-      form.classList.remove('hidden');
     }
 
     /* ================= VALIDAR SENHA ================= */
@@ -123,19 +131,20 @@
     function validarSenha(password) {
       const temNumero = /\d/.test(password);
       const temLetra = /[a-zA-Z]/.test(password);
+      const temEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-      if (password.length < 6) {
-        return 'Mínimo de 6 caracteres';
+      if (password.length < 8) {
+        return 'Mínimo de 8 caracteres';
       }
 
-      if (!temNumero || !temLetra) {
-        return 'Use letras e números';
+      if (!temNumero || !temLetra || !temEspecial) {
+        return 'Use letras, números e caractere especial';
       }
 
       return null;
     }
 
-    /* ================= UPDATE ================= */
+    /* ================= UPDATE PASSWORD ================= */
 
     async function updatePassword() {
 
@@ -148,47 +157,68 @@
       msg.innerText = '';
 
       if (!password || !confirm) {
-        msg.innerText = 'Preencha todos os campos';
-        msg.className = 'msg error';
-        isProcessing = false;
-        return;
+        showError('Preencha todos os campos');
+        return resetButton();
       }
 
       const erroSenha = validarSenha(password);
 
       if (erroSenha) {
-        msg.innerText = erroSenha;
-        msg.className = 'msg error';
-        isProcessing = false;
-        return;
+        showError(erroSenha);
+        return resetButton();
       }
 
       if (password !== confirm) {
-        msg.innerText = 'As senhas não coincidem';
-        msg.className = 'msg error';
-        isProcessing = false;
-        return;
+        showError('As senhas não coincidem');
+        return resetButton();
       }
 
       btn.disabled = true;
       btn.innerText = 'Atualizando...';
 
-      const { error } = await supabaseClient.auth.updateUser({
-        password: password
-      });
+      try {
 
-      if (error) {
-        msg.innerText = error.message;
-        msg.className = 'msg error';
-        btn.disabled = false;
-        btn.innerText = 'Atualizar senha';
-        isProcessing = false;
-      } else {
+        const { error } = await supabaseClient.auth.updateUser({
+          password: password
+        });
+
+        if (error) {
+          showError(error.message || 'Erro ao atualizar senha');
+          return resetButton();
+        }
+
         msg.innerText = 'Senha atualizada com sucesso!';
         msg.className = 'msg success';
         btn.innerText = 'Concluído';
+
+        // 🔥 invalida sessão de reset
+        await supabaseClient.auth.signOut();
+
+        // 🔥 redireciona (opcional)
+        setTimeout(() => {
+          window.location.href = '/'; // ou página de login
+        }, 2000);
+
+      } catch {
+        showError('Erro inesperado. Tente novamente.');
+        resetButton();
       }
     }
+
+    /* ================= HELPERS ================= */
+
+    function showError(text) {
+      msg.innerText = text;
+      msg.className = 'msg error';
+    }
+
+    function resetButton() {
+      btn.disabled = false;
+      btn.innerText = 'Atualizar senha';
+      isProcessing = false;
+    }
+
+    /* ================= INIT ================= */
 
     checkSession();
   </script>
