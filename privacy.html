@@ -3,136 +3,476 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Política de Privacidade - Garrafix</title>
+
+  <title>Política de Privacidade e Termos de Uso - Garrafix</title>
 
   <style>
+    :root {
+      --green-dark: #003d32;
+      --green-medium: #0b5a43;
+      --background: #f4f6f3;
+      --text: #222;
+      --muted: #666;
+      --border: #e3e8e2;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--background);
       margin: 0;
       padding: 20px;
-      color: #333;
+      color: var(--text);
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 34px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+    }
+
+    .company {
+      text-align: center;
+      margin-bottom: 26px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
     }
 
     h1 {
-      color: #2e7d32;
+      color: var(--green-dark);
       text-align: center;
+      margin: 0 0 12px;
+      font-size: 30px;
+      line-height: 1.2;
     }
 
     h2 {
-      margin-top: 25px;
-      color: #2e7d32;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      color: var(--green-dark);
+      font-size: 20px;
+      line-height: 1.3;
     }
 
     p {
-      line-height: 1.6;
-      margin-top: 10px;
+      line-height: 1.65;
+      margin: 10px 0;
+      font-size: 16px;
     }
 
     ul {
       margin-top: 10px;
-      padding-left: 20px;
+      padding-left: 22px;
     }
 
     li {
       margin-bottom: 8px;
+      line-height: 1.55;
+      font-size: 16px;
+    }
+
+    strong {
+      color: var(--green-dark);
+    }
+
+    .notice {
+      background: #f1f7f4;
+      border-left: 4px solid var(--green-medium);
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 18px 0;
     }
 
     .footer {
-      margin-top: 30px;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
       font-size: 14px;
       text-align: center;
-      color: #777;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--green-medium);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 22px;
+        border-radius: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      p,
+      li {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
 
 <body>
+  <main class="container">
+    <section class="company">
+      <h1>Política de Privacidade e Termos de Uso</h1>
 
-  <div class="container">
-
-    <h1>Política de Privacidade</h1>
+      <p>
+        <strong>GARRAFIX PEÇAS DE FIXAÇÃO AUTOMOTIVA LTDA</strong><br />
+        CNPJ: <strong>01.702.499/0001-41</strong>
+      </p>
+    </section>
 
     <p>
-      A <strong>Garrafix Peças de Fixação Automotiva LTDA</strong> respeita a sua privacidade e está comprometida com a proteção dos seus dados pessoais.
+      Esta Política de Privacidade e Termos de Uso explica como a Garrafix coleta,
+      utiliza, armazena, protege e compartilha dados pessoais dos usuários do
+      aplicativo, em conformidade com a Lei Geral de Proteção de Dados Pessoais
+      — LGPD, Lei nº 13.709/2018.
     </p>
 
-    <h2>1. Dados coletados</h2>
-    <p>Durante o uso do aplicativo, podemos coletar os seguintes dados:</p>
-    <ul>
-      <li>Nome completo ou razão social</li>
-      <li>CPF ou CNPJ</li>
-      <li>E-mail</li>
-      <li>Telefone</li>
-      <li>Endereço completo (CEP, rua, número, bairro, cidade e estado)</li>
-      <li>Informações de pedidos</li>
-      <li>Observações fornecidas pelo usuário</li>
-    </ul>
-
-    <h2>2. Finalidade do uso dos dados</h2>
-    <p>Os dados coletados são utilizados para:</p>
-    <ul>
-      <li>Criação e autenticação da conta</li>
-      <li>Processamento de pedidos</li>
-      <li>Comunicação com o cliente</li>
-      <li>Melhoria da experiência na plataforma</li>
-      <li>Cumprimento de obrigações legais</li>
-    </ul>
-
-    <h2>3. Compartilhamento de dados</h2>
     <p>
-      Os dados podem ser compartilhados apenas quando necessário para a execução dos serviços, como logística de entrega e processamento de pedidos.
-    </p>
-    <p>
-      A Garrafix não vende nem comercializa dados pessoais.
+      Ao criar uma conta, acessar ou utilizar o aplicativo da Garrafix, o usuário
+      declara que leu, compreendeu e concorda com as condições abaixo.
     </p>
 
-    <h2>4. Armazenamento e segurança</h2>
-    <p>
-      Os dados são armazenados em serviços seguros de terceiros, incluindo plataformas de backend e banco de dados.
-    </p>
-    <p>
-      Adotamos medidas de segurança para proteger suas informações contra acessos não autorizados, alteração ou divulgação indevida.
-    </p>
-
-    <h2>5. Direitos do usuário</h2>
-    <p>O usuário pode, a qualquer momento:</p>
-    <ul>
-      <li>Solicitar atualização de seus dados</li>
-      <li>Solicitar exclusão da conta</li>
-      <li>Solicitar informações sobre o uso dos dados</li>
-    </ul>
-
-    <h2>6. Cookies e tecnologias</h2>
-    <p>
-      O aplicativo pode utilizar tecnologias básicas para funcionamento, mas não realiza rastreamento invasivo de comportamento.
-    </p>
-
-    <h2>7. Alterações nesta política</h2>
-    <p>
-      Esta política pode ser atualizada a qualquer momento. Recomendamos a revisão periódica.
-    </p>
-
-    <h2>8. Contato</h2>
-    <p>
-      Em caso de dúvidas ou solicitações relacionadas à privacidade, entre em contato:
-    </p>
-    <p><strong>Email:</strong> garrafix@hotmail.com</p>
-
-    <div class="footer">
-      Última atualização: 2026
+    <div class="notice">
+      <p>
+        A Garrafix utiliza os dados pessoais apenas para finalidades relacionadas
+        ao cadastro, atendimento, análise comercial, realização de pedidos,
+        entrega, segurança, cumprimento de obrigações legais e melhoria da
+        plataforma.
+      </p>
     </div>
 
-  </div>
+    <h2>1. Informações coletadas</h2>
 
+    <p>
+      Para viabilizar o cadastro, análise comercial, atendimento, emissão de
+      pedidos e operação do aplicativo, a Garrafix poderá coletar as seguintes
+      informações fornecidas pelo usuário:
+    </p>
+
+    <ul>
+      <li>Nome completo ou razão social;</li>
+      <li>CPF ou CNPJ;</li>
+      <li>E-mail;</li>
+      <li>Telefone;</li>
+      <li>Endereço completo, incluindo CEP, rua, número, complemento, bairro, cidade e estado;</li>
+      <li>Informações inseridas pelo usuário em campos livres, como observações de cadastro ou de pedido;</li>
+      <li>Dados relacionados aos pedidos realizados, incluindo produtos, quantidades, valores, endereço de entrega e histórico de atendimento.</li>
+    </ul>
+
+    <p>
+      Também poderão ser gerados dados técnicos e operacionais relacionados à
+      conta, como identificador do usuário, status de aprovação, data de criação
+      da conta, registros de aceite dos termos, versão da política aceita e dados
+      necessários para autenticação e segurança da plataforma.
+    </p>
+
+    <h2>2. Finalidade do uso dos dados</h2>
+
+    <p>As informações coletadas são utilizadas para as seguintes finalidades:</p>
+
+    <ul>
+      <li>Criar, identificar e autenticar a conta do usuário;</li>
+      <li>Validar dados cadastrais e aprovar contas de clientes;</li>
+      <li>Permitir a realização, acompanhamento e gestão de pedidos;</li>
+      <li>Gerar orçamentos, comprovantes, relatórios, documentos internos e PDFs relacionados aos pedidos;</li>
+      <li>Entrar em contato com o cliente sobre cadastro, pedidos, entregas, pagamentos, disponibilidade de produtos ou atendimento;</li>
+      <li>Organizar a operação comercial, logística e administrativa da Garrafix;</li>
+      <li>Cumprir obrigações legais, fiscais, regulatórias e contábeis;</li>
+      <li>Prevenir fraudes, acessos indevidos, abusos no uso do aplicativo e proteger os direitos da Garrafix e de terceiros;</li>
+      <li>Melhorar a experiência, desempenho, segurança e funcionamento do aplicativo.</li>
+    </ul>
+
+    <h2>3. Bases legais para tratamento dos dados</h2>
+
+    <p>
+      A Garrafix poderá tratar dados pessoais com fundamento nas bases legais
+      previstas na LGPD, conforme a finalidade aplicável, incluindo:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Execução de contrato ou procedimentos preliminares:</strong>
+        para cadastro, atendimento, análise comercial e realização de pedidos;
+      </li>
+      <li>
+        <strong>Cumprimento de obrigação legal ou regulatória:</strong>
+        especialmente em relação a registros comerciais, fiscais, contábeis e administrativos;
+      </li>
+      <li>
+        <strong>Legítimo interesse:</strong>
+        para prevenção de fraudes, segurança da plataforma, melhoria dos serviços e proteção dos direitos da Garrafix;
+      </li>
+      <li>
+        <strong>Consentimento:</strong>
+        quando necessário, especialmente para envio de comunicações promocionais, novidades e ofertas.
+      </li>
+    </ul>
+
+    <h2>4. Compartilhamento de dados</h2>
+
+    <p>
+      A Garrafix não vende nem comercializa dados pessoais dos usuários.
+    </p>
+
+    <p>
+      Os dados poderão ser compartilhados apenas quando necessário para operação
+      do serviço, cumprimento de obrigações legais ou proteção dos direitos da
+      empresa, incluindo:
+    </p>
+
+    <ul>
+      <li>Serviços de autenticação, backend, banco de dados e armazenamento, como Supabase;</li>
+      <li>Serviços de hospedagem e infraestrutura utilizados para funcionamento do aplicativo e da API;</li>
+      <li>Serviços de consulta de endereço, como BrasilAPI, para preenchimento e validação de CEP;</li>
+      <li>Sistemas internos ou integrados de gestão, ERP, emissão ou controle de pedidos;</li>
+      <li>Serviços de e-mail, atendimento, comunicação e suporte ao cliente;</li>
+      <li>Operações logísticas, transportadoras, entregadores ou parceiros envolvidos na separação, envio e entrega dos pedidos;</li>
+      <li>Prestadores de serviços contábeis, jurídicos, administrativos ou fiscais, quando necessário;</li>
+      <li>Autoridades públicas, órgãos fiscalizadores ou terceiros, quando houver obrigação legal, ordem válida ou necessidade de defesa dos direitos da Garrafix.</li>
+    </ul>
+
+    <p>
+      O compartilhamento será limitado ao necessário para cada finalidade.
+    </p>
+
+    <h2>5. Armazenamento e segurança</h2>
+
+    <p>
+      Os dados são armazenados em serviços próprios ou de terceiros contratados
+      pela Garrafix, utilizados exclusivamente para operação, segurança,
+      administração e melhoria da plataforma.
+    </p>
+
+    <p>
+      A Garrafix adota medidas técnicas e administrativas para proteger os dados
+      pessoais contra acesso não autorizado, perda, alteração, uso indevido,
+      divulgação indevida ou qualquer forma de tratamento inadequado.
+    </p>
+
+    <p>
+      Entre as medidas de segurança adotadas ou recomendadas estão autenticação
+      de usuários, controle de acesso, proteção de rotas, uso de conexão segura,
+      restrição de permissões administrativas, validação de dados, logs
+      operacionais e boas práticas de segurança no backend e no banco de dados.
+    </p>
+
+    <p>
+      As senhas dos usuários não são armazenadas diretamente pela aplicação da
+      Garrafix, sendo gerenciadas por serviço de autenticação seguro.
+    </p>
+
+    <p>
+      O usuário também é responsável por proteger seu acesso, manter sua senha em
+      sigilo e não compartilhar sua conta com terceiros.
+    </p>
+
+    <h2>6. Tempo de armazenamento dos dados</h2>
+
+    <p>
+      Os dados pessoais serão mantidos enquanto forem necessários para cumprir as
+      finalidades descritas nesta política, incluindo manutenção da conta,
+      atendimento ao cliente, histórico de pedidos, cumprimento de obrigações
+      legais, fiscais, regulatórias, contábeis, exercício regular de direitos,
+      prevenção de fraudes e defesa da Garrafix em processos administrativos,
+      judiciais ou extrajudiciais.
+    </p>
+
+    <p>
+      Quando os dados não forem mais necessários, poderão ser excluídos,
+      anonimizados ou mantidos apenas quando houver fundamento legal para sua
+      conservação.
+    </p>
+
+    <p>
+      A exclusão da conta pelo usuário não implica necessariamente a exclusão
+      imediata de todos os dados, pois determinadas informações poderão ser
+      mantidas pelo prazo necessário para cumprimento de obrigações legais,
+      fiscais, comerciais, garantia, cobrança, auditoria ou defesa de direitos.
+    </p>
+
+    <h2>7. Direitos do usuário</h2>
+
+    <p>
+      Nos termos da LGPD, o usuário poderá solicitar à Garrafix, quando aplicável:
+    </p>
+
+    <ul>
+      <li>Confirmação da existência de tratamento de seus dados pessoais;</li>
+      <li>Acesso aos dados pessoais tratados pela Garrafix;</li>
+      <li>Correção de dados incompletos, inexatos ou desatualizados;</li>
+      <li>Anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com a LGPD;</li>
+      <li>Informação sobre compartilhamento de dados com terceiros;</li>
+      <li>Revogação de consentimento, quando o tratamento depender de consentimento;</li>
+      <li>Solicitação de exclusão da conta, observadas as hipóteses legais de retenção de dados;</li>
+      <li>Portabilidade dos dados, quando aplicável e conforme regulamentação da autoridade competente.</li>
+    </ul>
+
+    <p>
+      As solicitações serão avaliadas conforme a legislação aplicável e poderão
+      ser atendidas total ou parcialmente, especialmente quando houver necessidade
+      de manutenção de dados por obrigação legal, fiscal, regulatória, contratual
+      ou para defesa de direitos da Garrafix.
+    </p>
+
+    <h2>8. Comunicações e promoções</h2>
+
+    <p>
+      A Garrafix poderá entrar em contato com o usuário para tratar de assuntos
+      relacionados ao cadastro, aprovação de conta, pedidos, entregas, atendimento,
+      suporte, alterações no aplicativo ou comunicações necessárias à prestação
+      do serviço.
+    </p>
+
+    <p>
+      O envio de promoções, ofertas, novidades e campanhas comerciais poderá
+      ocorrer quando houver consentimento do usuário ou outra base legal aplicável.
+      O usuário poderá solicitar o cancelamento do recebimento dessas comunicações
+      pelos canais de contato da Garrafix.
+    </p>
+
+    <h2>9. Cookies e tecnologias similares</h2>
+
+    <p>
+      O aplicativo e as páginas relacionadas poderão utilizar tecnologias básicas
+      necessárias ao funcionamento, segurança, autenticação, desempenho e melhoria
+      da experiência do usuário.
+    </p>
+
+    <p>
+      A Garrafix não utiliza essas tecnologias para rastreamento invasivo de
+      comportamento fora da plataforma.
+    </p>
+
+    <h2>10. Responsabilidade do usuário</h2>
+
+    <p>
+      O usuário é responsável pela veracidade, atualização e precisão das
+      informações fornecidas no aplicativo.
+    </p>
+
+    <p>
+      O usuário também é responsável pelo conteúdo inserido em campos livres, como
+      observações de cadastro ou pedido, comprometendo-se a não inserir dados de
+      terceiros sem autorização, informações falsas, ofensivas, ilegais ou
+      desnecessárias para a finalidade do serviço.
+    </p>
+
+    <p>
+      O uso indevido do aplicativo, tentativa de acesso não autorizado, manipulação
+      de informações, fraude, compartilhamento indevido de conta ou violação destes
+      termos poderá resultar em bloqueio, suspensão ou exclusão da conta, sem
+      prejuízo de outras medidas cabíveis.
+    </p>
+
+    <h2>11. Condições de uso do aplicativo</h2>
+
+    <p>
+      O aplicativo da Garrafix tem como finalidade facilitar a consulta de produtos,
+      cadastro de clientes, realização de pedidos, atendimento e relacionamento
+      comercial com a empresa.
+    </p>
+
+    <p>
+      A criação de conta não garante aprovação automática como cliente. A Garrafix
+      poderá analisar, aprovar, recusar, suspender ou bloquear cadastros conforme
+      seus critérios comerciais, cadastrais, operacionais e de segurança.
+    </p>
+
+    <p>
+      Produtos, preços, estoque, imagens, descrições e condições comerciais podem
+      sofrer alterações, correções ou indisponibilidade sem aviso prévio. Pedidos
+      realizados pelo aplicativo poderão passar por conferência interna antes de
+      confirmação final.
+    </p>
+
+    <p>
+      A Garrafix poderá corrigir erros de cadastro, preço, descrição, estoque,
+      imagem ou disponibilidade de produtos quando identificados.
+    </p>
+
+    <h2>12. Canal de privacidade e proteção de dados</h2>
+
+    <p>
+      A Garrafix poderá, quando aplicável, não indicar encarregado pelo tratamento
+      de dados pessoais formalmente nomeado, nos termos da regulamentação aplicável
+      aos agentes de tratamento de pequeno porte.
+    </p>
+
+    <p>
+      Mesmo assim, mantém canal de comunicação para que o usuário possa tratar de
+      dúvidas, solicitações, correções, exclusão de conta ou exercício de direitos
+      relacionados a dados pessoais:
+    </p>
+
+    <p>
+      <strong>E-mail:</strong>
+      <a href="mailto:garrafix.app@gmail.com">garrafix.app@gmail.com</a>
+    </p>
+
+    <p>
+      Ao entrar em contato, o usuário poderá ser solicitado a confirmar sua
+      identidade para proteção da própria conta e prevenção de acessos indevidos.
+    </p>
+
+    <h2>13. Incidentes de segurança</h2>
+
+    <p>
+      Caso ocorra incidente de segurança que possa acarretar risco ou dano
+      relevante aos titulares de dados, a Garrafix avaliará o ocorrido e adotará
+      as medidas cabíveis, incluindo comunicação aos titulares afetados e à
+      Autoridade Nacional de Proteção de Dados, quando exigido pela legislação
+      aplicável.
+    </p>
+
+    <h2>14. Alterações nesta política</h2>
+
+    <p>
+      Esta Política de Privacidade e Termos de Uso poderá ser atualizada a qualquer
+      momento para refletir melhorias no aplicativo, mudanças operacionais,
+      alterações legais, regulatórias ou comerciais.
+    </p>
+
+    <p>
+      Quando houver alteração relevante, a Garrafix poderá solicitar novo aceite
+      do usuário ou comunicar a atualização pelos meios disponíveis no aplicativo.
+    </p>
+
+    <p>
+      Recomenda-se que o usuário revise periodicamente esta política.
+    </p>
+
+    <div class="footer">
+      <strong>Última atualização:</strong> Julho de 2026<br />
+      Garrafix Peças de Fixação Automotiva LTDA — CNPJ: 01.702.499/0001-41
+    </div>
+  </main>
 </body>
 </html>
