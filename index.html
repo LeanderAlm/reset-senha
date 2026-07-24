@@ -1,227 +1,458 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Redefinir senha</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+
+  <title>Redefinir senha — Garrafix MG</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="robots"
+    content="noindex, nofollow"
+  />
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       font-family: Arial, sans-serif;
       background: #0B5E2B;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
     .container {
-      background: white;
+      width: 100%;
+      max-width: 420px;
       padding: 30px;
+
+      background: #FFFFFF;
       border-radius: 12px;
-      width: 90%;
-      max-width: 400px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
-    h2 {
+    h1 {
+      margin: 0 0 10px;
       color: #0B5E2B;
-      margin-bottom: 10px;
+      font-size: 26px;
+    }
+
+    p {
+      line-height: 1.5;
     }
 
     .hidden {
       display: none;
     }
 
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+
+      color: #333333;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     input {
       width: 100%;
       padding: 12px;
+
+      border: 1px solid #CCCCCC;
       border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
+
       font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #0B5E2B;
+      outline: 2px solid rgba(11, 94, 43, 0.15);
     }
 
     button {
       width: 100%;
       padding: 12px;
+
       border: none;
       border-radius: 8px;
+
       background: #0B5E2B;
-      color: white;
+      color: #FFFFFF;
+
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
     button:disabled {
-      background: #999;
+      cursor: not-allowed;
+      background: #999999;
+    }
+
+    .password-rules {
+      margin: 8px 0 18px;
+      color: #555555;
+      font-size: 13px;
+      text-align: left;
     }
 
     .msg {
-      margin-top: 15px;
+      min-height: 20px;
+      margin-top: 16px;
       font-size: 14px;
     }
 
-    .error { color: red; }
-    .success { color: green; }
+    .error {
+      color: #B00020;
+    }
+
+    .success {
+      color: #087A35;
+    }
   </style>
 </head>
 
 <body>
+  <main class="container">
+    <h1>Redefinir senha</h1>
 
-  <div class="container">
-    <h2>Redefinir senha!</h2>
+    <p id="status" aria-live="polite">
+      Verificando o link de recuperação...
+    </p>
 
-    <p id="status">Verificando link...</p>
+    <form id="form" class="hidden" novalidate>
+      <div class="form-group">
+        <label for="password">Nova senha</label>
 
-    <div id="form" class="hidden">
-      <input type="password" id="password" placeholder="Nova senha" />
-      <input type="password" id="confirm" placeholder="Confirmar senha" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Digite a nova senha"
+          autocomplete="new-password"
+          minlength="8"
+          required
+        />
+      </div>
 
-      <button onclick="updatePassword()" id="btn">
+      <div class="form-group">
+        <label for="confirm">Confirmar nova senha</label>
+
+        <input
+          type="password"
+          id="confirm"
+          name="confirm"
+          placeholder="Repita a nova senha"
+          autocomplete="new-password"
+          minlength="8"
+          required
+        />
+      </div>
+
+      <p class="password-rules">
+        A senha deve ter pelo menos 8 caracteres e conter letras,
+        números e um caractere especial.
+      </p>
+
+      <button type="submit" id="btn">
         Atualizar senha
       </button>
-    </div>
+    </form>
 
-    <p id="msg" class="msg"></p>
-  </div>
+    <p
+      id="msg"
+      class="msg"
+      role="status"
+      aria-live="polite"
+    ></p>
+  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
+    const SUPABASE_URL =
+      'https://vppzpfoqmhjsynusyitx.supabase.co';
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      'sb_publishable_T7AEj7zSK62iKDYQTWeIeQ_NM8hbY15';
+
     const supabaseClient = supabase.createClient(
-      'https://vppzpfoqmhjsynusyitx.supabase.co',
-      'sb_publishable_T7AEj7zSK62iKDYQTWeIeQ_NM8hbY15'
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth: {
+          detectSessionInUrl: true,
+          persistSession: true,
+          autoRefreshToken: true
+        }
+      }
     );
 
-    const status = document.getElementById('status');
-    const form = document.getElementById('form');
-    const msg = document.getElementById('msg');
-    const btn = document.getElementById('btn');
+    const statusElement = document.getElementById('status');
+    const formElement = document.getElementById('form');
+    const messageElement = document.getElementById('msg');
+    const buttonElement = document.getElementById('btn');
+    const passwordElement = document.getElementById('password');
+    const confirmElement = document.getElementById('confirm');
 
     let isProcessing = false;
+    let recoveryDetected = false;
 
-    /* ================= CHECK SESSION ================= */
-
-    async function checkSession() {
-      try {
-        const { data } = await supabaseClient.auth.getSession();
-
-        if (!data.session) {
-          status.innerText = 'Link inválido ou expirado.';
-          msg.innerText = 'Solicite uma nova recuperação de senha.';
-          msg.className = 'msg error';
-          return;
-        }
-
-        status.innerText = 'Digite sua nova senha';
-        form.classList.remove('hidden');
-
-      } catch {
-        status.innerText = 'Erro ao validar sessão.';
-        msg.innerText = 'Tente novamente mais tarde.';
-        msg.className = 'msg error';
-      }
+    function showMessage(text, type) {
+      messageElement.innerText = text;
+      messageElement.className = `msg ${type}`;
     }
 
-    /* ================= VALIDAR SENHA ================= */
+    function clearMessage() {
+      messageElement.innerText = '';
+      messageElement.className = 'msg';
+    }
 
-    function validarSenha(password) {
-      const temNumero = /\d/.test(password);
-      const temLetra = /[a-zA-Z]/.test(password);
-      const temEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    function showRecoveryForm() {
+      recoveryDetected = true;
+
+      statusElement.innerText =
+        'Digite e confirme sua nova senha.';
+
+      formElement.classList.remove('hidden');
+
+      setTimeout(() => {
+        passwordElement.focus();
+      }, 100);
+    }
+
+    function showInvalidLink() {
+      formElement.classList.add('hidden');
+
+      statusElement.innerText =
+        'Link inválido ou expirado.';
+
+      showMessage(
+        'Solicite um novo link de recuperação de senha pelo aplicativo.',
+        'error'
+      );
+    }
+
+    function setLoading(loading) {
+      isProcessing = loading;
+      buttonElement.disabled = loading;
+      buttonElement.innerText = loading
+        ? 'Atualizando...'
+        : 'Atualizar senha';
+    }
+
+    function validatePassword(password) {
+      const hasLetter = /[a-zA-Z]/.test(password);
+      const hasNumber = /\d/.test(password);
+      const hasSpecialCharacter =
+        /[!@#$%^&*(),.?":{}|<>_\-+=;'/\\[\]`~]/.test(password);
 
       if (password.length < 8) {
-        return 'Mínimo de 8 caracteres';
+        return 'A senha deve ter pelo menos 8 caracteres.';
       }
 
-      if (!temNumero || !temLetra || !temEspecial) {
-        return 'Use letras, números e caractere especial';
+      if (!hasLetter) {
+        return 'A senha deve conter pelo menos uma letra.';
+      }
+
+      if (!hasNumber) {
+        return 'A senha deve conter pelo menos um número.';
+      }
+
+      if (!hasSpecialCharacter) {
+        return 'A senha deve conter pelo menos um caractere especial.';
       }
 
       return null;
     }
 
-    /* ================= UPDATE PASSWORD ================= */
+    function urlIndicatesRecovery() {
+      const hash = window.location.hash;
+      const query = window.location.search;
 
-    async function updatePassword() {
+      return (
+        hash.includes('type=recovery') ||
+        hash.includes('access_token=') ||
+        query.includes('type=recovery') ||
+        query.includes('code=')
+      );
+    }
 
-      if (isProcessing) return;
-      isProcessing = true;
-
-      const password = document.getElementById('password').value;
-      const confirm = document.getElementById('confirm').value;
-
-      msg.innerText = '';
-
-      if (!password || !confirm) {
-        showError('Preencha todos os campos');
-        return resetButton();
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' && session) {
+        showRecoveryForm();
       }
+    });
 
-      const erroSenha = validarSenha(password);
-
-      if (erroSenha) {
-        showError(erroSenha);
-        return resetButton();
-      }
-
-      if (password !== confirm) {
-        showError('As senhas não coincidem');
-        return resetButton();
-      }
-
-      btn.disabled = true;
-      btn.innerText = 'Atualizando...';
-
+    async function checkRecoverySession() {
       try {
-
-        const { error } = await supabaseClient.auth.updateUser({
-          password: password
-        });
+        const {
+          data: { session },
+          error
+        } = await supabaseClient.auth.getSession();
 
         if (error) {
-          showError(error.message || 'Erro ao atualizar senha');
-          return resetButton();
+          console.error(
+            '[RESET PASSWORD] Erro ao validar sessão:',
+            error.message
+          );
+
+          showInvalidLink();
+          return;
         }
 
-        msg.innerText = 'Senha atualizada com sucesso!';
-        msg.className = 'msg success';
-        btn.innerText = 'Concluído';
+        /*
+         * Alguns fluxos do Supabase podem criar a sessão antes de
+         * disparar o evento PASSWORD_RECOVERY. Nesse caso, aceitamos
+         * a sessão somente quando a própria URL indica recuperação.
+         */
+        if (session && urlIndicatesRecovery()) {
+          showRecoveryForm();
+          return;
+        }
 
-        // 🔥 invalida sessão de reset
-        await supabaseClient.auth.signOut();
-
-        // 🔥 redireciona (opcional)
         setTimeout(() => {
-          window.location.href = '/'; // ou página de login
-        }, 2000);
+          if (!recoveryDetected) {
+            showInvalidLink();
+          }
+        }, 1200);
+      } catch (error) {
+        console.error(
+          '[RESET PASSWORD] Erro inesperado:',
+          error
+        );
 
-      } catch {
-        showError('Erro inesperado. Tente novamente.');
-        resetButton();
+        statusElement.innerText =
+          'Não foi possível validar o link.';
+
+        showMessage(
+          'Tente novamente mais tarde ou solicite um novo link.',
+          'error'
+        );
       }
     }
 
-    /* ================= HELPERS ================= */
+    async function updatePassword(event) {
+      event.preventDefault();
 
-    function showError(text) {
-      msg.innerText = text;
-      msg.className = 'msg error';
+      if (isProcessing) {
+        return;
+      }
+
+      clearMessage();
+
+      const password = passwordElement.value;
+      const confirmation = confirmElement.value;
+
+      if (!password || !confirmation) {
+        showMessage(
+          'Preencha os dois campos.',
+          'error'
+        );
+
+        return;
+      }
+
+      const passwordError = validatePassword(password);
+
+      if (passwordError) {
+        showMessage(passwordError, 'error');
+        return;
+      }
+
+      if (password !== confirmation) {
+        showMessage(
+          'As senhas não coincidem.',
+          'error'
+        );
+
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        const { error } =
+          await supabaseClient.auth.updateUser({
+            password
+          });
+
+        if (error) {
+          console.error(
+            '[RESET PASSWORD] Erro ao atualizar senha:',
+            error.message
+          );
+
+          showMessage(
+            'Não foi possível atualizar a senha. Solicite um novo link e tente novamente.',
+            'error'
+          );
+
+          setLoading(false);
+          return;
+        }
+
+        statusElement.innerText =
+          'Senha atualizada com sucesso!';
+
+        showMessage(
+          'Você já pode entrar no aplicativo usando a nova senha.',
+          'success'
+        );
+
+        formElement.classList.add('hidden');
+
+        await supabaseClient.auth.signOut();
+
+        /*
+         * Remove tokens e códigos de recuperação da URL,
+         * evitando que permaneçam no histórico do navegador.
+         */
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+      } catch (error) {
+        console.error(
+          '[RESET PASSWORD] Erro inesperado:',
+          error
+        );
+
+        showMessage(
+          'Erro inesperado. Tente novamente.',
+          'error'
+        );
+
+        setLoading(false);
+      }
     }
 
-    function resetButton() {
-      btn.disabled = false;
-      btn.innerText = 'Atualizar senha';
-      isProcessing = false;
-    }
+    formElement.addEventListener(
+      'submit',
+      updatePassword
+    );
 
-    /* ================= INIT ================= */
-
-    checkSession();
+    checkRecoverySession();
   </script>
-
 </body>
 </html>
